@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  ghost:
+    image: ghost:latest
+    restart: always
+    ports:
+      - 8080:2368
+    environment:
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: ghost
+      database__connection__password: ghost
+      database__connection__database: ghost
+      url: http://localhost:8080
+
+  db:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - "ghost-data:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: ghost
+      MYSQL_DATABASE: ghost
+      MYSQL_USER: ghost
+      MYSQL_PASSWORD: ghost
+
+volumes:
+  ghost-data:
